@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <form action="#" onsubmit="storingToServer(event)">
+                    <label for="sp"> Selling Product :- </label>
+                    <input type="number" name="sellprice" id="sp" class="form-control"><br>
+                    <label for="pn"> Product Name :- </label>
+                    <input type="text" name="productName" id="pn" class="form-control"><br>
+                    <button class="btn btn-dark form-control">Add Product</button>
+            
+                    <h1>Product List :-</h1>
+                    <div>
+                        <ul id="espical"></ul>
+                    </div>
+                    <h2>Total Amount = </h2>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        function storingToServer(event){
+            event.preventDefault();
+            const prodObj = {
+                sellInput : event.target.sellprice.value,
+                prodnameInput : event.target.productName.value
+            }
+            // localStorage.setItem(prodObj.sellInput , JSON.stringify(prodObj));
+            axios.post("https://crudcrud.com/api/5dec05adb2b8455e8c27e1ff8235b25d/sellingProduct" , prodObj)
+            .then((response) => {
+                
+                displayServerDataOnScreen(response.data);
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            displayServerDataOnScreen(prodObj);
+        }
+
+        window.addEventListener("DOMContentLoaded" , () => {
+            axios.get("https://crudcrud.com/api/5dec05adb2b8455e8c27e1ff8235b25d/sellingProduct")
+            .then((arr) => {
+                console.log(arr);
+                for(let i = 0; i < arr.data.length; i++)
+                {
+                    displayServerDataOnScreen(arr.data[i]);
+                }
+            })
+            .catch((brr) => {
+                console.log(brr);
+            })
+        })
+
+        function displayServerDataOnScreen(prodObj){
+            const parentUlTag = document.getElementById("espical");
+            const childLiTag = document.createElement('li');
+            childLiTag.className = "product-list";
+            childLiTag.id = `${prodObj._id}`;
+            childLiTag.appendChild(document.createTextNode(`${prodObj._id} - ${prodObj.sellInput} - ${prodObj.prodnameInput}`));
+            
+            const delBtn = document.createElement('button');
+            delBtn.value = 'delete';
+            delBtn.appendChild(document.createTextNode("DELETE"));
+
+            delBtn.onclick = () => {
+                axios.delete(`https://crudcrud.com/api/5dec05adb2b8455e8c27e1ff8235b25d/sellingProduct/${prodObj._id}`)
+                .then((res) => {
+                    console.log(res);
+                    for(let i = 0; i < res.data.length; i++)
+                    {
+                        displayServerDataOnScreen(res.data[i]);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+                parentUlTag.removeChild(childLiTag);
+            }
+            
+
+
+            childLiTag.appendChild(delBtn);
+            parentUlTag.appendChild(childLiTag);
+
+            document.getElementById("sp").value = '';
+            document.getElementById("pn").value = '';
+
+        }
+
+        // const totalProduct = document.getElementsByTagName('h2');
+        // // console.log(totalProduct);
+        // for(let i = 0; i < totalProduct.length; i++)
+        // {
+        //     document.body.innerHTML = totalProduct + 00
+        // }
+    </script>
+</body>
+</html>
