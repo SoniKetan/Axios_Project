@@ -7,23 +7,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
+
+    <link rel="stylesheet" href="002--Waiter_Order_App.css">
     
-    <style>
-        body{
-            background-color: rgb(192, 147, 234);
-        }
-        header{
-            text-align: center;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        }
-        label{
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            font-weight: bold;
-        }
-        option{
-            font-weight: bold;
-        }
-    </style>
 
 </head>
 <body>
@@ -52,7 +38,7 @@
                                     <option > Table = 01 </option>
                                     <option > Table = 02 </option>
                                     <option > Table = 03 </option>
-                                    <option > Pack & Carry </option>
+                                    <option > Table = 04 </option>
                                     <option selected> None </option>
                                 </select>
                             </div><br>
@@ -69,9 +55,9 @@
     </div>
 
     <div class="container">
-        <div class="card bg-success">
+        <div class="card">
             <div class="card-body">
-                <h1> Orders :- </h1>
+                <h1 id="ord"> Orders :- </h1>
                 
                 <h2 id="table10"> Table :- 01 </h2>
                 <div>
@@ -88,9 +74,9 @@
                     <ul id="tbl03"></ul>
                 </div>
                 
-                <h2 id="table40"> Pack & Carry </h2>
+                <h2 id="table40"> Table :- 04 </h2>
                 <div>
-                    <ul id="car40"></ul>
+                    <ul id="tbl04"></ul>
                 </div>
 
             </div>
